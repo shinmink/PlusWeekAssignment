@@ -15,6 +15,8 @@ import com.sparta.plusweekassignment.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -88,5 +90,10 @@ public class LikedService {
         }
 
         likedRepository.delete(existingLike);
+    }
+
+    public Page<LikedResponseDto> getLikedPosts(UserDetailsImpl user, Pageable pageable) {
+        return likedRepository.findByUserIdOrderByCreatedAtDesc(user.getUser().getId(), pageable)
+                .map(LikedResponseDto::new);
     }
 }

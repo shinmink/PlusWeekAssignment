@@ -7,6 +7,9 @@ import com.sparta.plusweekassignment.domain.liked.service.LikedService;
 import com.sparta.plusweekassignment.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,6 +47,21 @@ public class LikedController {
                 .body(CommonResponseDto.<LikedResponseDto>builder()
                         .statusCode(HttpStatus.OK.value())
                         .message("좋아요 제거 성공")
+                        .build());
+    }
+
+    @GetMapping
+    public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedPosts(
+            @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<LikedResponseDto> likedPosts = likedService.getLikedPosts(user, pageable);
+        return ResponseEntity.ok()
+                .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
+                        .statusCode(HttpStatus.OK.value())
+                        .message("좋아요 한 게시글 목록 조회 성공")
+                        .data(likedPosts)
                         .build());
     }
 }
