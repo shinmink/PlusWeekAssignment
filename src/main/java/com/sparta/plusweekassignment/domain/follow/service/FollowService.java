@@ -3,6 +3,7 @@ package com.sparta.plusweekassignment.domain.follow.service;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowRequestDto;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowResponseDto;
 import com.sparta.plusweekassignment.domain.follow.entity.Follow;
+import com.sparta.plusweekassignment.domain.follow.entity.UserProfileWithFollowerCount;
 import com.sparta.plusweekassignment.domain.follow.repository.FollowRepository;
 import com.sparta.plusweekassignment.domain.post.dto.PostResponseDto;
 import com.sparta.plusweekassignment.domain.post.entity.Post;
@@ -89,4 +90,7 @@ public interface FollowService {
     List<PostResponseDto> getFollowedUserPosts(UserDetailsImpl user);
 
     List<PostResponseDto> getFollowerPosts(UserDetailsImpl user, int page, int size, String sortBy);
+
+    List<UserProfileWithFollowerCount> getTop10Followers();
+
 }

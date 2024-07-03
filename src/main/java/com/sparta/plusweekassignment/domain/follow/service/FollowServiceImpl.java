@@ -4,6 +4,7 @@ package com.sparta.plusweekassignment.domain.follow.service;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowRequestDto;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowResponseDto;
 import com.sparta.plusweekassignment.domain.follow.entity.Follow;
+import com.sparta.plusweekassignment.domain.follow.entity.UserProfileWithFollowerCount;
 import com.sparta.plusweekassignment.domain.follow.repository.FollowRepository;
 import com.sparta.plusweekassignment.domain.post.dto.PostResponseDto;
 import com.sparta.plusweekassignment.domain.post.entity.Post;
@@ -104,6 +105,16 @@ public class FollowServiceImpl implements FollowService {
         return followerPostsPage.getContent().stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserProfileWithFollowerCount> getTop10Followers() {
+        List<UserProfileWithFollowerCount> top10Followers = userRepository.findTop10ByOrderByFollowersDesc()
+                .stream()
+                .map(user -> new UserProfileWithFollowerCount(user, followRepository.countByToUser(user)))
+                .collect(Collectors.toList());
+
+        return top10Followers;
     }
 
 }
