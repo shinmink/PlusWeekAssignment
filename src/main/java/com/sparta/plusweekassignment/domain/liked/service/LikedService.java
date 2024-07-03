@@ -96,4 +96,9 @@ public class LikedService {
         return likedRepository.findByUserIdOrderByCreatedAtDesc(user.getUser().getId(), pageable)
                 .map(LikedResponseDto::new);
     }
+
+    public Page<LikedResponseDto> getLikedComments(UserDetailsImpl user, Pageable pageable) {
+        return likedRepository.findByUserIdOrderByCreatedAtDesc(user.getUser().getId(), pageable)
+                .map(LikedResponseDto::new);
+    }
 }

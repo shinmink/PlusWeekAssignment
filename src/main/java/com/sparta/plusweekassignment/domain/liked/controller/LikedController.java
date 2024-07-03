@@ -64,4 +64,19 @@ public class LikedController {
                         .data(likedPosts)
                         .build());
     }
+
+    @GetMapping("/comments")
+    public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedComments(
+            @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<LikedResponseDto> likedComments = likedService.getLikedComments(user, pageable);
+        return ResponseEntity.ok()
+                .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
+                        .statusCode(HttpStatus.OK.value())
+                        .message("좋아요 한 댓글 목록 조회 성공")
+                        .data(likedComments)
+                        .build());
+    }
 }

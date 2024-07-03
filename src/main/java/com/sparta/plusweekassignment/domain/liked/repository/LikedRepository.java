@@ -13,5 +13,4 @@ public interface LikedRepository extends JpaRepository<Liked, Long> {
 
     Page<Liked> findByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
 
-
 }
