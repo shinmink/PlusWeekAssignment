@@ -48,7 +48,12 @@ public class FollowController {
     }
 
     @GetMapping
-    public ResponseEntity<CommonResponseDto<List<PostResponseDto>>> getFollowedUserPosts(@AuthenticationPrincipal UserDetailsImpl user){
+    public ResponseEntity<CommonResponseDto<List<PostResponseDto>>> getFollowedUserPosts(
+            @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy
+    ){
         List<PostResponseDto> responseDtos = followService.getFollowedUserPosts(user);
         return ResponseEntity.ok()
                 .body(CommonResponseDto.<List<PostResponseDto>>builder()
