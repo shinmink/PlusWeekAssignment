@@ -4,7 +4,6 @@ import com.sparta.plusweekassignment.domain.post.dto.PostPageResponseDto;
 import com.sparta.plusweekassignment.domain.post.entity.Post;
 import com.sparta.plusweekassignment.domain.user.entity.User;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,8 +36,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUserInOrderByCreatedAtDesc(List<User> followedUsers);
 
-    Page<Post> findFollowerPostsOrderByCreatedAtDesc(Long id, PageRequest of);
+    Page<Post> findFollowerPostsByOrderByCreatedAtDesc(Long id, Pageable pageable);
 
-    Page<Post> findFollowerPostsOrderByAuthor(Long id, PageRequest of);
+    Page<Post> findFollowerPostsOrderByUserId(Long id, Pageable pageable);
+
 
 }

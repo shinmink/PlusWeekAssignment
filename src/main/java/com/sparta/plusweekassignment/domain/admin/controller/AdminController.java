@@ -30,7 +30,11 @@ public class AdminController {
     //유저 권한 수정
     // "adminKey" : "7Ja065Oc66+87YKk"
     @PutMapping("/admin/user/{userId}/role")
-    public ResponseEntity<String> adminSetUserRole(@PathVariable(value = "userId") Long userId, @Valid @RequestBody UserRoleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<String> adminSetUserRole(
+            @PathVariable(value = "userId") Long userId,
+            @Valid @RequestBody UserRoleRequestDto requestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
         userService.adminSetUserRole(userId, requestDto, userDetails.getUser());
         return ResponseEntity.status(HttpStatus.OK).body(userId + " 번 아이디가 [" + requestDto.getRole() + "] 권한으로 변경 되었습니다.");
     }
@@ -65,7 +69,9 @@ public class AdminController {
 
     //게시물 삭제
     @DeleteMapping("/admin/post/{postId}")
-    public ResponseEntity<CommonResponseDto<PostResponseDto>> adminDeletePost(@PathVariable(value = "postId") Long postId){
+    public ResponseEntity<CommonResponseDto<PostResponseDto>> adminDeletePost(
+            @PathVariable(value = "postId") Long postId
+    ){
         postService.adminDeletePost(postId);
         return ResponseEntity.ok()
                 .body(CommonResponseDto.<PostResponseDto>builder()

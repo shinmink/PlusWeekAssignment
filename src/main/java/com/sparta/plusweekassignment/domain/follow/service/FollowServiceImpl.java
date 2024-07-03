@@ -92,13 +92,13 @@ public class FollowServiceImpl implements FollowService {
         Page<Post> followerPostsPage;
         switch (sortBy) {
             case "createdAt":
-                followerPostsPage = postRepository.findFollowerPostsOrderByCreatedAtDesc(user.getUser().getId(), PageRequest.of(page, size));
+                followerPostsPage = postRepository.findFollowerPostsByOrderByCreatedAtDesc(user.getUser().getId(), PageRequest.of(page, size));
                 break;
             case "author":
-                followerPostsPage = postRepository.findFollowerPostsOrderByAuthor(user.getUser().getId(), PageRequest.of(page, size));
+                followerPostsPage = postRepository.findFollowerPostsOrderByUserId(user.getUser().getId(), PageRequest.of(page, size));
                 break;
             default:
-                followerPostsPage = postRepository.findFollowerPostsOrderByCreatedAtDesc(user.getUser().getId(), PageRequest.of(page, size));
+                followerPostsPage = postRepository.findFollowerPostsByOrderByCreatedAtDesc(user.getUser().getId(), PageRequest.of(page, size));
                 break;
         }
 
