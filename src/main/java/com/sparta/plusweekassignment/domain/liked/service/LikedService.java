@@ -25,6 +25,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LikedService {
+
     private final LikedRepository likedRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -92,13 +93,13 @@ public class LikedService {
         likedRepository.delete(existingLike);
     }
 
-    public Page<LikedResponseDto> getLikedPosts(UserDetailsImpl user, Pageable pageable) {
-        return likedRepository.findByUserIdOrderByCreatedAtDesc(user.getUser().getId(), pageable)
+    public Page<LikedResponseDto> getLikedPosts(UserDetailsImpl user, LikedRequestDto likedRequestDto, Pageable pageable) {
+        return likedRepository.findByUserIdAndContentsIdAndContentsTypeOrderByCreatedAtDesc(user.getUser().getId(), postRepository.findById(likedRequestDto.getContentsId()).toString(), ContentsTypeEnum.POST, pageable)
                 .map(LikedResponseDto::new);
     }
 
-    public Page<LikedResponseDto> getLikedComments(UserDetailsImpl user, Pageable pageable) {
-        return likedRepository.findByUserIdOrderByCreatedAtDesc(user.getUser().getId(), pageable)
+    public Page<LikedResponseDto> getLikedComments(UserDetailsImpl user, LikedRequestDto likedRequestDto, Pageable pageable) {
+        return likedRepository.findByUserIdAndContentsIdAndContentsTypeOrderByCreatedAtDesc(user.getUser().getId(), commentRepository.findById(likedRequestDto.getContentsId()).toString(), ContentsTypeEnum.COMMENT, pageable)
                 .map(LikedResponseDto::new);
     }
 }

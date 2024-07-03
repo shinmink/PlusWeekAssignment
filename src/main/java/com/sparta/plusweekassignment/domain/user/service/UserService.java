@@ -1,6 +1,8 @@
 package com.sparta.plusweekassignment.domain.user.service;
 
 import com.sparta.plusweekassignment.domain.admin.dto.UserRoleRequestDto;
+import com.sparta.plusweekassignment.domain.liked.entity.ContentsTypeEnum;
+import com.sparta.plusweekassignment.domain.liked.repository.LikedRepository;
 import com.sparta.plusweekassignment.domain.user.dto.ChangePasswordRequestDto;
 import com.sparta.plusweekassignment.domain.user.dto.ProfileRequestDto;
 import com.sparta.plusweekassignment.domain.user.dto.ProfileResponseDto;
@@ -27,6 +29,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final LikedRepository likedRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
@@ -58,7 +61,16 @@ public class UserService {
 
     //프로필 조회
     public ProfileResponseDto getProfile(User user) {
-        return new ProfileResponseDto(user.getUsername(), user.getNickname());
+
+        int likedPostsCount = likedRepository.countByUserIdAndContentsType(user.getId(), ContentsTypeEnum.POST);
+        int likedCommentsCount = likedRepository.countByUserIdAndContentsType(user.getId(), ContentsTypeEnum.COMMENT);
+
+        return ProfileResponseDto.builder()
+                .username(user.getUsername())
+                .nickname(user.getNickname())
+                .likedPostsCount(likedPostsCount)
+                .likedCommentsCount(likedCommentsCount)
+                .build();
     }
 
     //프로필 수정

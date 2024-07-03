@@ -1,19 +1,18 @@
 package com.sparta.plusweekassignment.domain.user.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ProfileResponseDto {
 
 
     private String username;
     private String nickname;
-
-
-    public ProfileResponseDto(String username, String nickname) {
-        this.username = username;
-        this.nickname = nickname;
-    }
+    private int likedPostsCount;
+    private int likedCommentsCount;
 }

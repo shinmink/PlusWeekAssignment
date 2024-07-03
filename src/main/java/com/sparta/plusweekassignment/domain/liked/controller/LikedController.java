@@ -50,13 +50,14 @@ public class LikedController {
                         .build());
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedPosts(
             @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestBody LikedRequestDto requestDto,
             @RequestParam(defaultValue = "0") int page
     ) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<LikedResponseDto> likedPosts = likedService.getLikedPosts(user, pageable);
+        Page<LikedResponseDto> likedPosts = likedService.getLikedPosts(user, requestDto, pageable);
         return ResponseEntity.ok()
                 .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
                         .statusCode(HttpStatus.OK.value())
@@ -68,10 +69,11 @@ public class LikedController {
     @GetMapping("/comments")
     public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedComments(
             @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestBody LikedRequestDto requestDto,
             @RequestParam(defaultValue = "0") int page
     ) {
         Pageable pageable = PageRequest.of(page, 5);
-        Page<LikedResponseDto> likedComments = likedService.getLikedComments(user, pageable);
+        Page<LikedResponseDto> likedComments = likedService.getLikedComments(user,requestDto,  pageable);
         return ResponseEntity.ok()
                 .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
                         .statusCode(HttpStatus.OK.value())
