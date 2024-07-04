@@ -54,10 +54,12 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
-//
-//    implementation 'javax.mail:mail:1.4.7'
-    // Spring Context Support
+    // 9. QueryDSL 적용을 위한 의존성 (SpringBoot3.0 부터는 jakarta 사용해야함)
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 
     implementation 'org.springframework:spring-context-support:5.3.9'
 

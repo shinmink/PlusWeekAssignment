@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -93,13 +94,19 @@ public class LikedService {
         likedRepository.delete(existingLike);
     }
 
-    public Page<LikedResponseDto> getLikedPosts(UserDetailsImpl user, LikedRequestDto likedRequestDto, Pageable pageable) {
-        return likedRepository.findByUserIdAndContentsIdAndContentsTypeOrderByCreatedAtDesc(user.getUser().getId(), postRepository.findById(likedRequestDto.getContentsId()).toString(), ContentsTypeEnum.POST, pageable)
-                .map(LikedResponseDto::new);
+    public Page<LikedResponseDto> getLikedPosts(UserDetailsImpl user, Pageable pageable) {
+        Page<Liked> result = likedRepository.findByUserIdAndContentsTypeWithPage(user.getUser().getId(), ContentsTypeEnum.POST, pageable);
+
+        Page<LikedResponseDto> map = result.map(LikedResponseDto::new);
+
+        return map;
     }
 
-    public Page<LikedResponseDto> getLikedComments(UserDetailsImpl user, LikedRequestDto likedRequestDto, Pageable pageable) {
-        return likedRepository.findByUserIdAndContentsIdAndContentsTypeOrderByCreatedAtDesc(user.getUser().getId(), commentRepository.findById(likedRequestDto.getContentsId()).toString(), ContentsTypeEnum.COMMENT, pageable)
-                .map(LikedResponseDto::new);
+    public Page<LikedResponseDto> getLikedComments(UserDetailsImpl user, Pageable pageable) {
+        Page<Liked> result = likedRepository.findByUserIdAndContentsTypeWithPage(user.getUser().getId(), ContentsTypeEnum.COMMENT, pageable);
+
+        Page<LikedResponseDto> map = result.map(LikedResponseDto::new);
+
+        return map;
     }
 }
