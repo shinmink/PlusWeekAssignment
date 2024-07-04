@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class UserProfileWithFollowerCount {
-    private final User user;
+    private final String username;
     private final long followerCount;
 
-    public UserProfileWithFollowerCount(User user, long followerCount) {
-        this.user = user;
+    public UserProfileWithFollowerCount(String username, long followerCount) {
+        this.username = username;
         this.followerCount = followerCount;
     }
 }

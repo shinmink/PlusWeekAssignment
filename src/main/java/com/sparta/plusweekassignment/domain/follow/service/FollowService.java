@@ -94,7 +94,7 @@ public class FollowService {
     public List<UserProfileWithFollowerCount> getTop10Followers() {
         List<UserProfileWithFollowerCount> top10Followers = userRepository.findTop10ByOrderByFollowersDesc()
                 .stream()
-                .map(user -> new UserProfileWithFollowerCount(user, followRepository.countByToUser(user)))
+                .map(user -> new UserProfileWithFollowerCount(user.getUsername(), followRepository.countByToUser(user)))
                 .collect(Collectors.toList());
 
         return top10Followers;

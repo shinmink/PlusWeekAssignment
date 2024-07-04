@@ -25,7 +25,7 @@ public class PostRepositoryQueryImpl implements PostRepositoryQuery {
         List<Post> result = jpaQueryFactory.selectFrom(post)
                 .where(post.user.in(followedUsers))
                 .orderBy(post.createdAt.desc())
-                .fetch();;
+                .fetch();
 
         return result;
     }
@@ -50,7 +50,7 @@ public class PostRepositoryQueryImpl implements PostRepositoryQuery {
 
         List<Post> result = jpaQueryFactory.selectFrom(post)
                 .where(post.user.id.eq(id))
-                .orderBy(post.user.nickname.desc())
+                .orderBy(post.user.username.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

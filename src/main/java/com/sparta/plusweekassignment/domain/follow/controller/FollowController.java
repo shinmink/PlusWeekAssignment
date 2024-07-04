@@ -3,9 +3,12 @@ package com.sparta.plusweekassignment.domain.follow.controller;
 import com.sparta.plusweekassignment.domain.common.CommonResponseDto;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowRequestDto;
 import com.sparta.plusweekassignment.domain.follow.dto.FollowResponseDto;
+import com.sparta.plusweekassignment.domain.follow.entity.UserProfileWithFollowerCount;
 import com.sparta.plusweekassignment.domain.follow.service.FollowService;
 import com.sparta.plusweekassignment.domain.liked.dto.LikedResponseDto;
 import com.sparta.plusweekassignment.domain.post.dto.PostResponseDto;
+import com.sparta.plusweekassignment.domain.user.entity.User;
+import com.sparta.plusweekassignment.domain.user.service.UserService;
 import com.sparta.plusweekassignment.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,7 @@ import java.util.List;
 public class FollowController {
 
     private final FollowService followService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<CommonResponseDto<FollowResponseDto>> followUser(
@@ -93,6 +97,18 @@ public class FollowController {
                         .statusCode(HttpStatus.OK.value())
                         .message("팔로우한 사용자의 게시물 조회 성공")
                         .data(responseDtos)
+                        .build());
+    }
+
+    @GetMapping("/top10")
+    public ResponseEntity<CommonResponseDto<List<UserProfileWithFollowerCount>>> getTop10Follower(){
+        List<UserProfileWithFollowerCount> top10List = followService.getTop10Followers();
+
+        return ResponseEntity.ok()
+                .body(CommonResponseDto.<List<UserProfileWithFollowerCount>>builder()
+                        .statusCode(HttpStatus.OK.value())
+                        .message("top 10 팔로워")
+                        .data(top10List)
                         .build());
     }
 
