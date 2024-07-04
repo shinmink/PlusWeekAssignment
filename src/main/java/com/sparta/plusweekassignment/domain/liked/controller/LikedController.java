@@ -51,25 +51,25 @@ public class LikedController {
                         .build());
     }
 
-//    @GetMapping("/posts")
-//    public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedPosts(
-//            @AuthenticationPrincipal UserDetailsImpl user,
-//            @RequestParam(required = false, defaultValue = "1") int page,
-//            @RequestParam(required = false, defaultValue = "5") int size,
-//            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
-//            @RequestParam(required = false, defaultValue = "false") boolean isAsc
-//    ) {
-//        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-//        Sort sort = Sort.by(direction, sortBy);
-//        Pageable pageable = PageRequest.of(page - 1, size, sort);
-//        Page<LikedResponseDto> likedPosts = likedService.getLikedPosts(user, pageable);
-//        return ResponseEntity.ok()
-//                .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
-//                        .statusCode(HttpStatus.OK.value())
-//                        .message("좋아요 한 게시글 목록 조회 성공")
-//                        .data(likedPosts)
-//                        .build());
-//    }
+    @GetMapping("/posts")
+    public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedPosts(
+            @AuthenticationPrincipal UserDetailsImpl user,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "5") int size,
+            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
+            @RequestParam(required = false, defaultValue = "false") boolean isAsc
+    ) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        Page<LikedResponseDto> likedPosts = likedService.getLikedPosts(user, pageable);
+        return ResponseEntity.ok()
+                .body(CommonResponseDto.<Page<LikedResponseDto>>builder()
+                        .statusCode(HttpStatus.OK.value())
+                        .message("좋아요 한 게시글 목록 조회 성공")
+                        .data(likedPosts)
+                        .build());
+    }
 
     @GetMapping("/comments")
     public ResponseEntity<CommonResponseDto<Page<LikedResponseDto>>> getLikedComments(

@@ -111,17 +111,17 @@ public class PostController {
                         .build());
     }
 
-    //페이지네이션
-    @PostMapping("/page")
-    public ResponseEntity<CommonResponseDto<Page<PostPageResponseDto>>> getPostPage(
-            @Valid @RequestBody PostPageRequestDto requestDto
-    ) {
-        Page<PostPageResponseDto> page = postService.getPostPage(requestDto);
-        return ResponseEntity.ok()
-                .body(CommonResponseDto.<Page<PostPageResponseDto>>builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .message("게시물 페이지 조회 성공")
-                        .data(page)
-                        .build());
-    }
+//    //페이지네이션
+//    @PostMapping("/page")
+//    public ResponseEntity<CommonResponseDto<Page<PostPageResponseDto>>> getPostPage(
+//            @Valid @RequestBody PostPageRequestDto requestDto
+//    ) {
+//        Page<PostPageResponseDto> page = postService.getPostPage(requestDto);
+//        return ResponseEntity.ok()
+//                .body(CommonResponseDto.<Page<PostPageResponseDto>>builder()
+//                        .statusCode(HttpStatus.OK.value())
+//                        .message("게시물 페이지 조회 성공")
+//                        .data(page)
+//                        .build());
+//    }
 }
